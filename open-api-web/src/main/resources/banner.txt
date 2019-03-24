@@ -1,0 +1,14 @@
+${AnsiColor.BRIGHT_RED}
+-----------------------------------------
+                                         .__
+  ____ ______   ____   ____ _____  ______ |__|
+ /  _ \\____ \_/ __ \ /    \\__  \ \____ \|  |
+(  <_> )  |_> >  ___/|   |  \/ __ \|  |_> >  |
+ \____/|   __/ \___  >___|  (____  /   __/|__|
+       |__|        \/     \/     \/|__|
+
+----------------------------------------
+${AnsiColor.GREEN}
+Spring Boot Version: ${spring-boot.version} ${spring-boot.formatted-version}
+Application port: ${server.port}
+Root Log Level: ${logging.level.root}
