@@ -29,14 +29,14 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.boot.version>1.5.14.RELEASE</spring.boot.version>
-        <spring.version>4.3.17.RELEASE</spring.version>
+        <spring.version>4.3.18.RELEASE</spring.version>
         <redisson.version>3.5.4</redisson.version>
         <commons-lang3.version>3.4</commons-lang3.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <commons-io.version>2.5</commons-io.version>
         <commons-net.version>3.2</commons-net.version>
         <commons-codec.version>1.10</commons-codec.version>
-        <commons-compress.version>1.12</commons-compress.version>
+        <commons-compress.version>1.18</commons-compress.version>
         <httpclient.version>4.5.2</httpclient.version>
         <fastjson.version>1.2.39</fastjson.version>
         <alibaba.common.lang.version>1.0</alibaba.common.lang.version>

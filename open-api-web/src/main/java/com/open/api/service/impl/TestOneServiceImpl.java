@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 /**
  * 测试开放接口1
+ * <p>
+ * 注解@OpenApiService > 开放接口自定义注解，用于启动时扫描接口
  */
 @Service
 @OpenApiService
@@ -24,8 +26,7 @@ public class TestOneServiceImpl implements TestOneService {
      * 方法1
      */
     @Override
-    public Test1BO testMethod1(String requestId, Test1BO test1BO) {
+    public void testMethod1(String requestId, Test1BO test1BO) {
         LOGGER.info("【{}】>> 测试开放接口1 >> 方法1 params={}", requestId, JSON.toJSONString(test1BO));
-        return test1BO;
     }
 }

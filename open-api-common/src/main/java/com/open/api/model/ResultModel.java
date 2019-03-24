@@ -1,5 +1,6 @@
 package com.open.api.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
@@ -11,7 +12,7 @@ import java.io.Serializable;
  */
 @Data
 @JsonNaming(value = PropertyNamingStrategy.SnakeCaseStrategy.class)
-//@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResultModel implements Serializable {
 
     private static final long serialVersionUID = -1L;
