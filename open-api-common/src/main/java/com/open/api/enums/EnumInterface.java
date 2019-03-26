@@ -1,7 +1,3 @@
-/**
- * fshows.com
- * Copyright (C) 2013-2019 All Rights Reserved.
- */
 package com.open.api.enums;
 
 /**
