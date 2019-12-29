@@ -29,7 +29,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.boot.version>1.5.14.RELEASE</spring.boot.version>
-        <spring.version>4.3.19.RELEASE</spring.version>
+        <spring.version>5.2.2.RELEASE</spring.version>
         <redisson.version>3.5.4</redisson.version>
         <commons-lang3.version>3.4</commons-lang3.version>
         <commons-collections.version>3.2.2</commons-collections.version>
