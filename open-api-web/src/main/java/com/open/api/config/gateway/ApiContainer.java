@@ -1,5 +1,6 @@
-package com.open.api.support;
+package com.open.api.config.gateway;
 
+import com.open.api.model.ApiModel;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

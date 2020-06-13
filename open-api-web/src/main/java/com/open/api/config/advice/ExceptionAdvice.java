@@ -1,8 +1,9 @@
-package com.open.api.advice;
+package com.open.api.config.advice;
 
 import com.open.api.enums.ApiExceptionEnum;
 import com.open.api.exception.BusinessException;
 import com.open.api.model.ResultModel;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -18,7 +19,10 @@ import java.text.MessageFormat;
 
 /**
  * 统一异常处理
+ *
+ * @author 程序员小强
  */
+@Slf4j
 @ControllerAdvice
 @EnableAspectJAutoProxy
 public class ExceptionAdvice {
@@ -26,7 +30,7 @@ public class ExceptionAdvice {
     /**
      * 日志
      */
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionAdvice.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionAdvice.class);
 
     @CrossOrigin
     @ResponseBody
@@ -35,9 +39,8 @@ public class ExceptionAdvice {
         ResultModel result;
 
         try {
-            logger.warn("全局业务处理异常 >> error = {}", exception.getMessage(), exception);
+            LOGGER.warn("全局业务处理异常 >> error = {}", exception.getMessage(), exception);
             throw exception;
-
         } catch (BusinessException e) {
             result = ResultModel.error(e.getCode(), e.getMsg());
 
@@ -52,9 +55,6 @@ public class ExceptionAdvice {
             result = ResultModel.error(ApiExceptionEnum.SYSTEM_ERROR.getCode(), ApiExceptionEnum.SYSTEM_ERROR.getMsg());
 
         }
-
         return result;
-
     }
-
 }

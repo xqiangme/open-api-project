@@ -1,9 +1,10 @@
-package com.open.api.support;
+package com.open.api.config.gateway;
 
 
 import com.open.api.annotation.OpenApi;
 import com.open.api.annotation.OpenApiService;
 import com.open.api.config.context.ApplicationContextHelper;
+import com.open.api.model.ApiModel;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,8 @@ import java.util.regex.Pattern;
 
 /**
  * Api接口扫描器
+ *
+ * @author 程序员小强
  */
 @Component
 public class ApiScanner implements CommandLineRunner {

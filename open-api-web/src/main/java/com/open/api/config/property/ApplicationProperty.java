@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 公共开关，key值 属性配置
+ *
+ * @author 程序员小强
  */
 @Data
 @Configuration
@@ -18,8 +20,12 @@ public class ApplicationProperty {
     private Boolean isCheckSign = true;
 
     /**
+     * 私钥
+     */
+    private String privateKey;
+
+    /**
      * 验签公钥
      */
     private String publicKey;
-
 }

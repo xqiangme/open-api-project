@@ -1,4 +1,4 @@
-package com.open.api.client;
+package com.open.api.config.gateway;
 
 import com.alibaba.fastjson.JSON;
 import com.alipay.api.internal.util.AlipaySignature;
@@ -9,10 +9,10 @@ import com.open.api.config.context.ApplicationContextHelper;
 import com.open.api.config.property.ApplicationProperty;
 import com.open.api.enums.ApiExceptionEnum;
 import com.open.api.exception.BusinessException;
-import com.open.api.support.ApiContainer;
-import com.open.api.support.ApiModel;
+import com.open.api.model.ApiModel;
 import com.open.api.model.ResultModel;
 import com.open.api.util.ValidateUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +22,12 @@ import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Api请求客户端
  *
- * @author 码农猿
+ * @author 程序员小强
  */
 @Service
 public class ApiClient {
@@ -61,7 +62,7 @@ public class ApiClient {
      * @param requestRandomId 请求随机标识（用于日志中分辨是否是同一次请求）
      * @param charset         请求编码
      * @param signType        签名格式
-     * @author 码农猿
+     * @author 程序员小强
      */
     public void checkSign(Map<String, Object> params, String requestRandomId, String charset, String signType) {
 
@@ -96,13 +97,14 @@ public class ApiClient {
     }
 
 
+
     /**
      * Api调用方法
      *
      * @param method          请求方法
      * @param requestRandomId 请求随机标识
      * @param content         请求体
-     * @author 码农猿
+     * @author 程序员小强
      */
     public ResultModel invoke(String method, String requestRandomId, String content) throws Throwable {
         //获取api方法
@@ -125,7 +127,7 @@ public class ApiClient {
         JSON_MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         // 设置下划线序列化方式
         JSON_MAPPER.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
-        Object result = JSON_MAPPER.readValue(content, Class.forName(apiModel.getParamName()));
+        Object result = JSON_MAPPER.readValue(StringUtils.isBlank(content) ? "{}" : content, Class.forName(apiModel.getParamName()));
 
         //校验参数
         ValidateUtils.validate(result);

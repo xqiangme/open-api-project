@@ -2,8 +2,7 @@ package com.open.api.service;
 
 
 import com.open.api.annotation.OpenApi;
-import com.open.api.bo.Test1BO;
-import com.open.api.bo.Test2BO;
+import com.open.api.web.bo.Test2BO;
 
 /**
  * 测试开放接口2

@@ -1,10 +1,9 @@
-package com.open.api.controller;
+package com.open.api.web.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.open.api.client.ApiClient;
+import com.open.api.config.gateway.ApiClient;
 import com.open.api.model.ResultModel;
 import com.open.api.util.SystemClock;
-import jodd.util.StringPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,7 @@ public class OpenApiController {
      * @param signType     签名格式
      * @param sign         签名
      * @param content      业务内容参数
-     * @author 码农猿
+     * @author 程序员小强
      */
     @PostMapping("/gateway")
     public ResultModel gateway(@RequestParam(value = "app_id", required = true) String appId,
@@ -53,7 +52,7 @@ public class OpenApiController {
                                @RequestParam(value = "content", required = true) String content,
                                HttpServletRequest request) throws Throwable {
 
-        Map<String, Object> params = WebUtils.getParametersStartingWith(request, StringPool.EMPTY);
+        Map<String, Object> params = WebUtils.getParametersStartingWith(request, "");
         LOGGER.info("【{}】>> 网关执行开始 >> method={} params = {}", apiRequestId, method, JSON.toJSONString(params));
         long start = SystemClock.millisClock().now();
 

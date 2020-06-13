@@ -8,6 +8,8 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * 高并发场景下System.currentTimeMillis()的性能问题的优化
  * 时间戳打印建议使用
+ *
+ * @author 程序员小强
  */
 public class SystemClock {
     private static final String THREAD_NAME = "system.clock";

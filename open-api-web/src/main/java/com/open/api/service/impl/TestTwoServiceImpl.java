@@ -2,7 +2,7 @@ package com.open.api.service.impl;
 
 
 import com.open.api.annotation.OpenApiService;
-import com.open.api.bo.Test2BO;
+import com.open.api.web.bo.Test2BO;
 import com.open.api.service.TestTwoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

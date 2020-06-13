@@ -5,6 +5,8 @@ import com.open.api.enums.EnumInterface;
 
 /**
  * 业务-统一异常
+ *
+ * @author 程序员小强
  */
 public class BusinessException extends BaseException {
 

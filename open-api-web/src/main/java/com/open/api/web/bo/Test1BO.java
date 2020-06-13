@@ -1,5 +1,6 @@
-package com.open.api.bo;
+package com.open.api.web.bo;
 
+import lombok.Data;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.NotBlank;
@@ -10,6 +11,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
+@Data
 public class Test1BO implements Serializable {
     private static final long serialVersionUID = -1L;
 
@@ -18,14 +20,7 @@ public class Test1BO implements Serializable {
     @Size(min = 1, message = "最小为{min}")
     private List<Item> itemList;
 
-    public List<Item> getItemList() {
-        return itemList;
-    }
-
-    public void setItemList(List<Item> itemList) {
-        this.itemList = itemList;
-    }
-
+    @Data
     public static class Item {
         @NotBlank(message = "username 不能为空！")
         private String username;
@@ -36,29 +31,6 @@ public class Test1BO implements Serializable {
         @NotBlank(message = "realName 不能为空！")
         private String realName;
 
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public String getRealName() {
-            return realName;
-        }
-
-        public void setRealName(String realName) {
-            this.realName = realName;
-        }
     }
 
     @Override

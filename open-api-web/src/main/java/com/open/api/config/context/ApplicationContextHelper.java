@@ -9,6 +9,8 @@ import java.util.Map;
 
 /**
  * 从applicationContext中得到Bean 工具类
+ *
+ * @author 程序员小强
  */
 @Component
 public class ApplicationContextHelper implements ApplicationContextAware {

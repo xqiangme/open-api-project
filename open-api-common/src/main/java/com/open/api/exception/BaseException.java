@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 
 /**
  * 基础异常
+ * @author 程序员小强
  */
 public class BaseException extends RuntimeException {
     protected String msg;

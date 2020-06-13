@@ -1,4 +1,4 @@
-package com.open.api.support;
+package com.open.api.model;
 
 import lombok.Data;
 

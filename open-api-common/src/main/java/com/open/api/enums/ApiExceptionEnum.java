@@ -2,6 +2,8 @@ package com.open.api.enums;
 
 /**
  * 异常枚举
+ *
+ * @author 程序员小强
  */
 public enum ApiExceptionEnum implements EnumInterface {
 

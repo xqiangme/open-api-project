@@ -13,6 +13,8 @@ import static com.google.common.collect.Iterables.getFirst;
 
 /**
  * 业务参数校验
+ *
+ * @author 程序员小强
  */
 public class ValidateUtils {
     private final static Validator VALIDATOR = Validation.buildDefaultValidatorFactory().getValidator();
