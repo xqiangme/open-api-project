@@ -22,12 +22,12 @@ public class GetWayRequestDemo {
         //创建参数
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("app_id", "1001");
-        paramMap.put("method", "open.api.test.two.method1");
+        paramMap.put("method", "open.api.test.one.method1");
         paramMap.put("version", "1.0");
         paramMap.put("api_request_id", "11111111111");
         paramMap.put("charset", "utf-8");
         paramMap.put("sign_type", "RSA2");
-        paramMap.put("content", "{\"password\":123,\"username\":123}\n");
+        paramMap.put("content", "{\"item_list\":[{\"password\":\"123\",\"real_name\":\"张三\",\"username\":\"张三\"}]}");
         return paramMap;
     }
 
@@ -58,7 +58,7 @@ public class GetWayRequestDemo {
         objParamMap.put("sign", sign);
         System.out.println("入参内容：");
         System.out.println(objParamMap);
-        String result = HttpUtil.post("http://localhost:8821/open/gateway", objParamMap);
+        String result = HttpUtil.post("http://localhost:8821/open/gateway", objParamMap,10000);
 
         System.out.println("返回结果:");
         System.out.println(result);
