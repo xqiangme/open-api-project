@@ -35,7 +35,7 @@
         <alipay-sdk.version>4.8.10.ALL</alipay-sdk.version>
         <hutool.version>5.0.0</hutool.version>
         <lombok.version>1.16.4</lombok.version>
-        <hibernate-validator.version>5.4.1.Final</hibernate-validator.version>
+        <hibernate-validator.version>5.4.2.Final</hibernate-validator.version>
     </properties>
 
     <!-- 依赖管理 -->
