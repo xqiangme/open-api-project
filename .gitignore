@@ -6,3 +6,4 @@ logs/
 target/
 .DS_store
 
+*rebel.xml

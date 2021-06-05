@@ -127,14 +127,24 @@ public class ApiClient {
         JSON_MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         // 设置下划线序列化方式
         JSON_MAPPER.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
-        Object result = JSON_MAPPER.readValue(StringUtils.isBlank(content) ? "{}" : content, Class.forName(apiModel.getParamName()));
+        Object result = null;
+        if (!StringUtils.isBlank(content) && !StringUtils.isBlank(apiModel.getParamName())) {
+            result = JSON_MAPPER.readValue(StringUtils.isBlank(content) ? "{}" : content, Class.forName(apiModel.getParamName()));
+        }
 
-        //校验参数
-        ValidateUtils.validate(result);
+        if (result != null) {
+            //校验参数
+            ValidateUtils.validate(result);
+        }
 
         //执行对应方法
         try {
-            Object obj = apiModel.getMethod().invoke(bean, requestRandomId, result);
+            Object obj = null;
+            if (result != null) {
+                obj = apiModel.getMethod().invoke(bean, requestRandomId, result);
+            } else {
+                obj = apiModel.getMethod().invoke(bean, requestRandomId);
+            }
             return ResultModel.success(obj);
         } catch (Exception e) {
             if (e instanceof InvocationTargetException) {

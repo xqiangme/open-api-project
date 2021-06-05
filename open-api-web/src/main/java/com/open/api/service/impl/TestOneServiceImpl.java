@@ -29,4 +29,10 @@ public class TestOneServiceImpl implements TestOneService {
     public void testMethod1(String requestId, Test1BO test1BO) {
         LOGGER.info("【{}】>> 测试开放接口1 >> 方法1 params={}", requestId, JSON.toJSONString(test1BO));
     }
+
+    @Override
+    public String testMethod2(String requestId) {
+        LOGGER.info("【{}】>> 测试开放接口2 >> 方法2 ", requestId);
+        return "xxx";
+    }
 }
