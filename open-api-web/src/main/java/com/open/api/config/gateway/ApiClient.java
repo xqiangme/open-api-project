@@ -12,17 +12,22 @@ import com.open.api.exception.BusinessException;
 import com.open.api.model.ApiModel;
 import com.open.api.model.ResultModel;
 import com.open.api.util.ValidateUtils;
+import com.open.api.utils.ConfigUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Api请求客户端
@@ -31,6 +36,17 @@ import java.util.TreeMap;
  */
 @Service
 public class ApiClient {
+
+    @Value("${open.api.web.ApiClient.clientPublicKeyPair}")
+    private String clientPublicKeyPair;
+
+    private ConcurrentHashMap<String, String> publicKeyPair = new ConcurrentHashMap<>(10);
+
+    @PostConstruct
+    public void init() {
+        Map<String, String> map = ConfigUtil.parseMap(clientPublicKeyPair);
+        publicKeyPair.putAll(map);
+    }
 
     /**
      * 日志
@@ -54,6 +70,7 @@ public class ApiClient {
 
     @Resource
     private ApplicationProperty applicationProperty;
+
 
     /**
      * 验签
@@ -79,8 +96,19 @@ public class ApiClient {
                 map.put(s, params.get(s).toString());
             }
 
+            Object app_id = params.get("app_id");
+            Assert.notNull(app_id, "app_id can't be null");
+
+            // 将app_id与公钥映射关系存储在配置文件或数据库或配置文件中去, 这里采用配置文件
+            if (!publicKeyPair.containsKey(app_id.toString())) {
+                LOGGER.error("【{}】 >> 验签失败 >> params = {}", requestRandomId, JSON.toJSONString(params));
+                throw new BusinessException(ApiExceptionEnum.INVALID_PARAM, "app_id 未注册公钥");
+            }
+
+            String publicKey = publicKeyPair.get(app_id.toString());
+
             LOGGER.warn("【{}】 >> 验签参数 {}", requestRandomId, map);
-            boolean checkSign = AlipaySignature.rsaCheckV1(map, applicationProperty.getPublicKey(), charset, signType);
+            boolean checkSign = AlipaySignature.rsaCheckV1(map, publicKey, charset, signType);
             if (!checkSign) {
                 LOGGER.info("【{}】 >> 验签失败 >> params = {}", requestRandomId, JSON.toJSONString(params));
                 throw new BusinessException(ApiExceptionEnum.INVALID_SIGN);
@@ -127,14 +155,24 @@ public class ApiClient {
         JSON_MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         // 设置下划线序列化方式
         JSON_MAPPER.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
-        Object result = JSON_MAPPER.readValue(StringUtils.isBlank(content) ? "{}" : content, Class.forName(apiModel.getParamName()));
+        Object result = null;
+        if (!StringUtils.isBlank(content) && !StringUtils.isBlank(apiModel.getParamName())) {
+            result = JSON_MAPPER.readValue(StringUtils.isBlank(content) ? "{}" : content, Class.forName(apiModel.getParamName()));
+        }
 
-        //校验参数
-        ValidateUtils.validate(result);
+        if (result != null) {
+            //校验参数
+            ValidateUtils.validate(result);
+        }
 
         //执行对应方法
         try {
-            Object obj = apiModel.getMethod().invoke(bean, requestRandomId, result);
+            Object obj = null;
+            if (result != null) {
+                obj = apiModel.getMethod().invoke(bean, requestRandomId, result);
+            } else {
+                obj = apiModel.getMethod().invoke(bean, requestRandomId);
+            }
             return ResultModel.success(obj);
         } catch (Exception e) {
             if (e instanceof InvocationTargetException) {

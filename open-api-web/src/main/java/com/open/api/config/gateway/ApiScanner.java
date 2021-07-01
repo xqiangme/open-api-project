@@ -74,7 +74,7 @@ public class ApiScanner implements CommandLineRunner {
                 String paramName = getParamName(method);
                 if (StringUtils.isBlank(paramName)) {
                     LOGGER.warn("Api接口业务参数缺失 >> method = {}", openApi.method());
-                    continue;
+                    //continue;
                 }
 
                 //组建ApiModel- 放入api容器
