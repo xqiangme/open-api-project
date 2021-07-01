@@ -50,12 +50,13 @@ public class GetWayRequestDemo {
 
     /**
      * PSCS8 公私钥生成方式 https://blog.csdn.net/youyangrensheng/article/details/103597619
+     * 也可以直接使用支付宝开发工具生成, 文档地址: https://opendocs.alipay.com/open/00uk9e
      * @return
      */
     private Map<String, Object> getObjParamForTestMethod2() {
         //创建参数
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("app_id", "1001");
+        paramMap.put("app_id", "1002");
         paramMap.put("method", "open.api.test.one.method2");
         paramMap.put("version", "1.0");
         paramMap.put("api_request_id", "11111111111");

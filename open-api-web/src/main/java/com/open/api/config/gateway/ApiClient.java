@@ -12,18 +12,22 @@ import com.open.api.exception.BusinessException;
 import com.open.api.model.ApiModel;
 import com.open.api.model.ResultModel;
 import com.open.api.util.ValidateUtils;
+import com.open.api.utils.ConfigUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Api请求客户端
@@ -32,6 +36,17 @@ import java.util.TreeMap;
  */
 @Service
 public class ApiClient {
+
+    @Value("${open.api.web.ApiClient.clientPublicKeyPair}")
+    private String clientPublicKeyPair;
+
+    private ConcurrentHashMap<String, String> publicKeyPair = new ConcurrentHashMap<>(10);
+
+    @PostConstruct
+    public void init() {
+        Map<String, String> map = ConfigUtil.parseMap(clientPublicKeyPair);
+        publicKeyPair.putAll(map);
+    }
 
     /**
      * 日志
@@ -81,19 +96,10 @@ public class ApiClient {
                 map.put(s, params.get(s).toString());
             }
 
-            //TODO 将app_id与公钥映射关系存储在配置文件或数据库中去
             Object app_id = params.get("app_id");
             Assert.notNull(app_id, "app_id can't be null");
 
-            Map<String, String> publicKeyPair = new HashMap<>();
-            publicKeyPair.put("1001", "" +
-                    "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCX55VkmghF6t2gzuOb2On7wPoD\n" +
-                    "w6K3/s/6dAxd9NivnNF/dzv0fjIlrMY2kyL3MXLzHzailNrdfgeTUr8/L8FnI+kM\n" +
-                    "VX9nYqPMFArLuRsO6RUVP0Uz3JVBqhd9xGdRHHZJJNXsc6CHHmGGhDVgskSD3Eo7\n" +
-                    "EdCT5IeGfZ6htSJU5QIDAQAB\n" +
-                    "");
-            publicKeyPair.put("1002", "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwdK0le7UypaYWEWBoQkGTpu2nlYnM+iX8pa7Gz9neSnANfcuxrMgmmXrG+Dw6f3OQpiHl4mbKelyVjJTBLh4cvo1am2OSZvBjefZNshphx4ctBtx6BpGIRwlTvJRsjajMCY3RyF6px+Ehz0zeDBf7w2M6GZnSv2YhPp2YIZZo/01GYVJ4RgzzfkEEKyC+96+shqANHVOaiiG4byMJL8zv9q3kshSNCA1NT8r7toq8wPYhUKwCas/i5GauyRCIX+KhCpD9+/HTkFmr0PUWoNIZ61lRpTMbiTfDWU/5tJ3UPwdk6oVM3ZwkLoBAO8HXHvPk6avCupXq63u4wGrn30eiwIDAQAB");
-
+            // 将app_id与公钥映射关系存储在配置文件或数据库或配置文件中去, 这里采用配置文件
             if (!publicKeyPair.containsKey(app_id.toString())) {
                 LOGGER.error("【{}】 >> 验签失败 >> params = {}", requestRandomId, JSON.toJSONString(params));
                 throw new BusinessException(ApiExceptionEnum.INVALID_PARAM, "app_id 未注册公钥");
